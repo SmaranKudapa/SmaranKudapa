@@ -10,10 +10,6 @@
 </p>
 
 <p align="center">
-  <img src="assets/header-projects.svg" width="830" alt="Select a project">
-</p>
-
-<p align="center">
   <a href="https://github.com/SmaranKudapa/rubish"><img src="assets/tile-rubish.gif" width="32%" alt="rubish: turn a word into Rubik's cube moves that spell it. (repo)"></a>
   <a href="https://github.com/SmaranKudapa/town-trial"><img src="assets/tile-town-trial.gif" width="32%" alt="Town Trial: research agents test local policy in a simulated town. (repo)"></a>
   <a href="https://github.com/SmaranKudapa/picky"><img src="assets/tile-picky.svg" width="32%" alt="picky: everyone agrees on food. 2nd place, Hack With Claude. (repo)"></a>
@@ -34,16 +30,12 @@
 </p>
 
 <p align="center">
-  <img src="assets/header-trophies.svg" width="830" alt="Trophies">
-</p>
-
-<p align="center">
   <a href="https://github.com/SmaranKudapa/picky"><img src="assets/award-picky.svg" width="49%" alt="2nd place, Hack With Claude at UC Berkeley, for picky"></a>
   <a href="https://github.com/SmaranKudapa/claimos"><img src="assets/award-claimos.svg" width="49%" alt="4th place at the YC x Naive Hackathon, for Claim OS"></a>
 </p>
 
 <p align="center">
-  <img src="assets/footer.svg" width="830" alt="Thanks for viewing">
+  <img src="assets/footer.svg" width="830" alt="Project mascots marching by">
 </p>
 
 <p align="center">

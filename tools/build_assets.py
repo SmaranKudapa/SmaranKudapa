@@ -531,29 +531,26 @@ def award(place, line1, project, medal_pal, accent):
 
 
 def footer():
-    W, H = 1600, 280
+    W, H, G = 1600, 176, 128   # G = ground line
     s, css = plate(0, 0, W, H), BASE_CSS
-    s += shadow_text('THANKS FOR VIEWING', W / 2, 46, 6, TXT, INK, off=(0, 6), anchor='middle')
-    s += rect(48, 236, W - 96, 4, PANEL_EDGE)
+    s += rect(48, G, W - 96, 4, PANEL_EDGE)
     for x in range(48, W - 48, 40):
-        s += rect(x, 244, 16, 4, PANEL_EDGE)
+        s += rect(x, G + 8, 16, 4, PANEL_EDGE)
     parade = [S.DUMPLING, S.ROBOT, S.CUBE, S.HOUSE, S.BUILDING, S.THERMO, S.ROBOT]
     scales = [6, 6, 5, 6, 6, 6, 5]
-    defs = f'<clipPath id="fc"><rect x="20" y="100" width="{W - 40}" height="140"/></clipPath>'
+    defs = f'<clipPath id="fc"><rect x="20" y="16" width="{W - 40}" height="{G - 16}"/></clipPath>'
     g, gap = '', 232
     total = gap * len(parade)
     for i, (sp, sc) in enumerate(zip(parade, scales)):
         sw, sh = sprite_size(sp, sc)
-        g += f'<g class="hop hop{i}">{sprite(sp, i * gap, 236 - sh, sc)}</g>'
+        g += f'<g class="hop hop{i}">{sprite(sp, i * gap, G - sh, sc)}</g>'
     s += f'<g clip-path="url(#fc)"><g class="march">{g}<g transform="translate({total} 0)">{g}</g></g></g>'
     css += (f".march{{animation:march 20s linear infinite}}"
             f"@keyframes march{{0%{{transform:translateX(0)}}100%{{transform:translateX(-{total}px)}}}}"
             ".hop{animation:hop .7s ease-in-out infinite}"
             "@keyframes hop{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}")
     css += ''.join(f".hop{i}{{animation-delay:{-i * .2:.1f}s}}" for i in range(len(parade)))
-    tw = text_w('THANKS FOR VIEWING', 6)
-    s += text('♥', W / 2 - tw / 2 - 50, 46, 6, p) + text('♥', W / 2 + tw / 2 + 20, 46, 6, p)
-    return svg(W, H, s, css, defs, title='Thanks for viewing')
+    return svg(W, H, s, css, defs, title='Project mascots marching by')
 
 
 # ═════════════════════════════════════════════════════════════════════════
@@ -636,8 +633,6 @@ def main():
         files[f'btn-demo-{key}.svg'] = demo_button(accents[key])
     files['spacer.svg'] = SPACER
     files['btn-continue.svg'] = continue_button()
-    files['header-projects.svg'] = section_header('SELECT A PROJECT')
-    files['header-trophies.svg'] = section_header('TROPHIES')
     files['award-picky.svg'] = award('2ND', 'HACK WITH CLAUDE', 'PICKY', S.SILVER, p)
     files['award-claimos.svg'] = award('4TH', 'YC X NAIVE HACKATHON', 'CLAIM OS', S.VIOLET, b)
     files['footer.svg'] = footer()
