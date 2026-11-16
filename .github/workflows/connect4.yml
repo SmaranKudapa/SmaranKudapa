@@ -1,0 +1,45 @@
+name: Connect Four
+
+on:
+  issues:
+    types: [opened]
+
+permissions:
+  contents: write
+  issues: write
+
+jobs:
+  move:
+    if: startsWith(github.event.issue.title, 'connect4|')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Play the move
+        env:
+          # Passed through env, never inlined into the script, so issue titles can't inject shell code.
+          TITLE: ${{ github.event.issue.title }}
+          PLAYER: ${{ github.event.issue.user.login }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          pushed=false
+          # Retry so two moves submitted at once both land: start from the latest main each time.
+          for attempt in 1 2 3 4 5; do
+            git fetch origin main
+            git reset --hard origin/main
+            python3 connect4/game.py > "$RUNNER_TEMP/reply.md"
+            if git diff --quiet; then pushed=true; break; fi
+            git commit -am "connect4: move by @$PLAYER"
+            if git push origin HEAD:main; then pushed=true; break; fi
+            sleep $((attempt * 3))
+          done
+          if [ "$pushed" != true ]; then
+            echo "Sorry @$PLAYER, lots of people are playing right now and your move couldn't be saved. Please try again!" > "$RUNNER_TEMP/reply.md"
+          fi
+
+      - name: Reply and close the issue
+        env:
+          GH_TOKEN: ${{ github.token }}
+          NUMBER: ${{ github.event.issue.number }}
+        run: gh issue close "$NUMBER" --repo "$GITHUB_REPOSITORY" --comment "$(cat "$RUNNER_TEMP/reply.md")"
