@@ -65,3 +65,7 @@
     <img src="assets/footer-light.svg" width="830" alt="Thanks for viewing">
   </picture>
 </p>
+
+<p align="center">
+  <a href="https://www.linkedin.com/in/smaran-kudapa/"><img src="assets/btn-continue.svg" width="280" alt="Continue on LinkedIn"></a>
+</p>

@@ -500,8 +500,12 @@ def section_header(label, theme, accents=(p, y, PAL['m'], b)):
     return svg(W, H, s, css, title=label.title())
 
 
+LIGHT_TEXT = {p: '#c2185b', b: '#0b6bcb'}   # darker accents that pass 4.5:1 on white
+
+
 def award(place, line1, line2, project, medal_pal, accent, theme):
     T = THEMES[theme]
+    ink = LIGHT_TEXT.get(accent, accent) if theme == 'light' else accent
     W, H = 800, 240
     s, css = '', BASE_CSS
     s += f'<path fill="none" stroke="{T["line"]}" stroke-width="4" d="{panel_path(4, 4, W - 8, H - 8, 6)}"/>'
@@ -515,13 +519,13 @@ def award(place, line1, line2, project, medal_pal, accent, theme):
     tx = 210
     s += shadow_text(f'{place} PLACE', tx, 52, 7, T['text'], accent, off=(0, 7))
     s += text(line1, tx, 130, 4, T['text'])
-    s += text(project, tx, 172, 3, accent)
+    s += text(project, tx, 172, 3, ink)
     return svg(W, H, s, css, title=f'{place} place — {line1.title()}')
 
 
 def footer(theme):
     T = THEMES[theme]
-    W, H = 1600, 300
+    W, H = 1600, 260
     s, css = '', BASE_CSS
     s += shadow_text('THANKS FOR VIEWING', W / 2, 36, 6, T['text'], T['shadow'], off=(0, 6), anchor='middle')
     s += rect(40, 236, W - 80, 4, T['line'])
@@ -544,7 +548,6 @@ def footer(theme):
             ".hop{animation:hop .7s ease-in-out infinite}"
             "@keyframes hop{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}")
     css += ''.join(f".hop{i}{{animation-delay:{-i * .2:.1f}s}}" for i in range(len(parade)))
-    s += f'<g class="blink">{text("CONTINUE? ▶", W / 2, 268, 3, T["accent"], anchor="middle")}</g>'
     s += text('♥', W / 2 - text_w('THANKS FOR VIEWING', 6) / 2 - 50, 36, 6, p)
     s += text('♥', W / 2 + text_w('THANKS FOR VIEWING', 6) / 2 + 20, 36, 6, p)
     return svg(W, H, s, css, defs, title='Thanks for playing')
@@ -587,6 +590,32 @@ def demo_button(accent):
 SPACER = svg(800, 112, '', title='')
 
 
+def continue_button():
+    W, H, c = 560, 112, 6
+    s, css = '', BASE_CSS
+    accent = y
+    s += f'<path fill="{INK}" d="{panel_path(0, 0, W, H, c)}"/>'
+    inner = panel_path(6, 6, W - 12, H - 12, c)
+    defs = f'<clipPath id="bc"><path d="{inner}"/></clipPath>'
+    s += (f'<g clip-path="url(#bc)">{rect(0, 0, W, H, accent)}{rect(0, 6, W, 8, _mix(accent, .45))}'
+          f'{rect(0, H - 18, W, 12, _mix(accent, .35, (11, 10, 20)))}'
+          f'<rect class="shine" x="-120" y="0" width="60" height="{H}" fill="#ffffff" opacity=".35" transform="skewX(-20)"/></g>')
+    label = 'CONTINUE'
+    lw = text_w(label, 7)
+    aw = text_w('▶', 7) + 28
+    x0 = (W - lw - aw) / 2
+    s += text(label, x0, 28, 7, INK)
+    s += f'<g class="nudge">{text("▶", x0 + lw + 28, 28, 7, INK)}</g>'
+    css += (".shine{animation:shine 3.6s linear infinite}"
+            "@keyframes shine{0%{transform:skewX(-20deg) translateX(0)}50%,100%{transform:skewX(-20deg) translateX(1000px)}}"
+            ".nudge{animation:nudge 1s ease-in-out infinite}"
+            "@keyframes nudge{0%,100%{transform:translateX(0)}50%{transform:translateX(8px)}}")
+    return svg(W, H, s, css, defs, 'Continue')
+
+
+from hero2 import hero  # animated banner (replaces the older hero above)
+
+
 # ═════════════════════════════════════════════════════════════════════════
 def main():
     os.makedirs(OUT, exist_ok=True)
@@ -603,6 +632,7 @@ def main():
     for key in DEMOS:
         files[f'btn-demo-{key}.svg'] = demo_button(accents[key])
     files['spacer.svg'] = SPACER
+    files['btn-continue.svg'] = continue_button()
     for th in ('dark', 'light'):
         files[f'header-projects-{th}.svg'] = section_header('SELECT A PROJECT', th)
         files[f'header-trophies-{th}.svg'] = section_header('TROPHIES', th)

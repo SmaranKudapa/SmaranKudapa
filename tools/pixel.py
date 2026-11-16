@@ -29,7 +29,7 @@ INK, CREAM = PAL['k'], PAL['w']
 THEMES = {
     # colours for assets on a transparent background (picture light/dark)
     'dark':  {'accent': '#ffc23d', 'text': '#f3efff', 'dim': '#8b88a8', 'line': '#30363d', 'shadow': '#000000'},
-    'light': {'accent': '#c77700', 'text': '#1b1930', 'dim': '#6e6a8a', 'line': '#d0d7de', 'shadow': '#dcd6f2'},
+    'light': {'accent': '#9a5b00', 'text': '#1b1930', 'dim': '#6e6a8a', 'line': '#d0d7de', 'shadow': '#dcd6f2'},
 }
 
 # ── 5x7 bitmap font ──────────────────────────────────────────────────────
