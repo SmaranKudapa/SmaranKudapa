@@ -10,11 +10,7 @@
 </p>
 
 <p align="center">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="assets/header-projects-dark.svg">
-    <source media="(prefers-color-scheme: light)" srcset="assets/header-projects-light.svg">
-    <img src="assets/header-projects-light.svg" width="830" alt="Select a project">
-  </picture>
+  <img src="assets/header-projects.svg" width="830" alt="Select a project">
 </p>
 
 <p align="center">
@@ -38,32 +34,16 @@
 </p>
 
 <p align="center">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="assets/header-trophies-dark.svg">
-    <source media="(prefers-color-scheme: light)" srcset="assets/header-trophies-light.svg">
-    <img src="assets/header-trophies-light.svg" width="830" alt="Trophies">
-  </picture>
+  <img src="assets/header-trophies.svg" width="830" alt="Trophies">
 </p>
 
 <p align="center">
-  <a href="https://github.com/SmaranKudapa/picky"><picture>
-    <source media="(prefers-color-scheme: dark)" srcset="assets/award-picky-dark.svg">
-    <source media="(prefers-color-scheme: light)" srcset="assets/award-picky-light.svg">
-    <img src="assets/award-picky-light.svg" width="49%" alt="2nd place, Hack With Claude at UC Berkeley, for picky">
-  </picture></a>
-  <a href="https://github.com/SmaranKudapa/claimos"><picture>
-    <source media="(prefers-color-scheme: dark)" srcset="assets/award-claimos-dark.svg">
-    <source media="(prefers-color-scheme: light)" srcset="assets/award-claimos-light.svg">
-    <img src="assets/award-claimos-light.svg" width="49%" alt="4th place at the YC x Naive Hackathon, for Claim OS">
-  </picture></a>
+  <a href="https://github.com/SmaranKudapa/picky"><img src="assets/award-picky.svg" width="49%" alt="2nd place, Hack With Claude at UC Berkeley, for picky"></a>
+  <a href="https://github.com/SmaranKudapa/claimos"><img src="assets/award-claimos.svg" width="49%" alt="4th place at the YC x Naive Hackathon, for Claim OS"></a>
 </p>
 
 <p align="center">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="assets/footer-dark.svg">
-    <source media="(prefers-color-scheme: light)" srcset="assets/footer-light.svg">
-    <img src="assets/footer-light.svg" width="830" alt="Thanks for viewing">
-  </picture>
+  <img src="assets/footer.svg" width="830" alt="Thanks for viewing">
 </p>
 
 <p align="center">

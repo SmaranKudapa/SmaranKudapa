@@ -42,7 +42,7 @@ def chrome_pngs(key):
     paths = {}
     for nm, data in (('base', base), ('over', over)):
         p = f'{TMP}/{key}-{nm}.svg'
-        open(p, 'w').write(data)
+        open(p, 'w', encoding='utf-8', newline='\n').write(data)
         paths[nm] = p
 
     async def shoot():
@@ -52,7 +52,7 @@ def chrome_pngs(key):
             pg = await br.new_page(viewport={'width': 800, 'height': 500}, device_scale_factor=1)
             for nm, p in paths.items():
                 html = f'{TMP}/{nm}.html'
-                open(html, 'w').write(f'<body style="margin:0;background:transparent">'
+                open(html, 'w', encoding='utf-8', newline='\n').write(f'<body style="margin:0;background:transparent">'
                                       f'<img id="i" src="file://{p}" style="width:800px;height:500px;display:block"></body>')
                 await pg.goto('file://' + html)
                 await pg.wait_for_timeout(150)

@@ -486,29 +486,36 @@ TILES = [
 # ═════════════════════════════════════════════════════════════════════════
 # TRANSPARENT ASSETS (light + dark variants)
 # ═════════════════════════════════════════════════════════════════════════
-def section_header(label, theme, accents=(p, y, PAL['m'], b)):
-    T = THEMES[theme]
-    W, H, px = 1600, 96, 5
+# These sit on GitHub's page background, so each carries its own dark panel
+# and looks identical in light mode, dark mode and any Markdown viewer.
+PANEL_BG, PANEL_EDGE, TXT, DIM = '#16142a', '#3a3366', '#f3efff', '#a9a4cc'
+
+
+def plate(x, y, w, h, c=8):
+    """Dark card with an ink border and bevel, like the project tiles."""
+    return (f'<path fill="{INK}" d="{panel_path(x, y, w, h, c)}"/>'
+            f'<path fill="{PANEL_BG}" d="{panel_path(x + c, y + c, w - 2 * c, h - 2 * c, c)}"/>'
+            f'<path fill="none" stroke="{PANEL_EDGE}" stroke-width="4" d="{panel_path(x + c + 2, y + c + 2, w - 2 * c - 4, h - 2 * c - 4, c)}"/>')
+
+
+def section_header(label):
+    W, H, px = 1600, 104, 5
     s, css = '', BASE_CSS
-    s += shadow_text(label, W / 2, 30, px, T['text'], T['shadow'], off=(0, 5), anchor='middle')
     tw = text_w(label, px)
-    left_end, right_start = W / 2 - tw / 2 - 70, W / 2 + tw / 2 + 70
-    s += f'<g class="ar">{text("▶", left_end, 30, px, T["accent"])}</g>'
-    s += f'<g class="ar">{text("◀", right_start, 30, px, T["accent"], anchor="end")}</g>'
-    css += (".ar{animation:ar .8s steps(1) infinite}"
-            "@keyframes ar{50%{opacity:.25}}")
+    aw = text_w('▶', px)
+    pw = tw + 2 * (aw + 60) + 80
+    s += plate((W - pw) / 2, 4, pw, H - 8)
+    s += shadow_text(label, W / 2, 34, px, TXT, INK, off=(0, 5), anchor='middle')
+    s += f'<g class="ar">{text("▶", W / 2 - tw / 2 - 60 - aw, 34, px, y)}</g>'
+    s += f'<g class="ar">{text("◀", W / 2 + tw / 2 + 60, 34, px, y)}</g>'
+    css += (".ar{animation:ar 1s ease-in-out infinite}"
+            "@keyframes ar{0%,100%{opacity:1}50%{opacity:.35}}")
     return svg(W, H, s, css, title=label.title())
 
 
-LIGHT_TEXT = {p: '#c2185b', b: '#0b6bcb'}   # darker accents that pass 4.5:1 on white
-
-
-def award(place, line1, line2, project, medal_pal, accent, theme):
-    T = THEMES[theme]
-    ink = LIGHT_TEXT.get(accent, accent) if theme == 'light' else accent
+def award(place, line1, project, medal_pal, accent):
     W, H = 800, 240
-    s, css = '', BASE_CSS
-    s += f'<path fill="none" stroke="{T["line"]}" stroke-width="4" d="{panel_path(4, 4, W - 8, H - 8, 6)}"/>'
+    s, css = plate(0, 0, W, H), BASE_CSS
     mw, mh = sprite_size(S.MEDAL, 9)
     s += f'<g class="spin">{sprite(S.medal(place[0]), 66, (H - mh) // 2, 9, medal_pal)}</g>'
     css += (".spin{transform-box:fill-box;transform-origin:center;animation:spin 3s ease-in-out infinite}"
@@ -517,40 +524,36 @@ def award(place, line1, line2, project, medal_pal, accent, theme):
         s += f'<g class="tw st{i}">{sprite(S.SPARK, sx, sy, 3, {"w": accent})}</g>'
     css += ''.join(f".st{i}{{animation-delay:{-i * .7:.1f}s}}" for i in range(3))
     tx = 210
-    s += shadow_text(f'{place} PLACE', tx, 52, 7, T['text'], accent, off=(0, 7))
-    s += text(line1, tx, 130, 4, T['text'])
-    s += text(project, tx, 172, 3, ink)
-    return svg(W, H, s, css, title=f'{place} place — {line1.title()}')
+    s += shadow_text(f'{place} PLACE', tx, 52, 7, TXT, accent, off=(0, 7))
+    s += text(line1, tx, 130, 4, TXT)
+    s += text(project, tx, 172, 3, accent)
+    return svg(W, H, s, css, title=f'{place} place, {line1.title()}')
 
 
-def footer(theme):
-    T = THEMES[theme]
-    W, H = 1600, 260
-    s, css = '', BASE_CSS
-    s += shadow_text('THANKS FOR VIEWING', W / 2, 36, 6, T['text'], T['shadow'], off=(0, 6), anchor='middle')
-    s += rect(40, 236, W - 80, 4, T['line'])
-    for x in range(40, W - 40, 40):
-        s += rect(x, 244, 16, 4, T['line'])
+def footer():
+    W, H = 1600, 280
+    s, css = plate(0, 0, W, H), BASE_CSS
+    s += shadow_text('THANKS FOR VIEWING', W / 2, 46, 6, TXT, INK, off=(0, 6), anchor='middle')
+    s += rect(48, 236, W - 96, 4, PANEL_EDGE)
+    for x in range(48, W - 48, 40):
+        s += rect(x, 244, 16, 4, PANEL_EDGE)
     parade = [S.DUMPLING, S.ROBOT, S.CUBE, S.HOUSE, S.BUILDING, S.THERMO, S.ROBOT]
     scales = [6, 6, 5, 6, 6, 6, 5]
-    defs = f'<clipPath id="fc"><rect x="40" y="100" width="{W - 80}" height="140"/></clipPath>'
-    g = ''
-    gap = 232
+    defs = f'<clipPath id="fc"><rect x="20" y="100" width="{W - 40}" height="140"/></clipPath>'
+    g, gap = '', 232
     total = gap * len(parade)
     for i, (sp, sc) in enumerate(zip(parade, scales)):
         sw, sh = sprite_size(sp, sc)
-        x0 = i * gap
-        g += f'<g class="hop hop{i}">{sprite(sp, x0, 236 - sh, sc)}</g>'
-    # two copies for a seamless loop
-    s += (f'<g clip-path="url(#fc)"><g class="march">{g}<g transform="translate({total} 0)">{g}</g></g></g>')
+        g += f'<g class="hop hop{i}">{sprite(sp, i * gap, 236 - sh, sc)}</g>'
+    s += f'<g clip-path="url(#fc)"><g class="march">{g}<g transform="translate({total} 0)">{g}</g></g></g>'
     css += (f".march{{animation:march 20s linear infinite}}"
             f"@keyframes march{{0%{{transform:translateX(0)}}100%{{transform:translateX(-{total}px)}}}}"
             ".hop{animation:hop .7s ease-in-out infinite}"
             "@keyframes hop{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}")
     css += ''.join(f".hop{i}{{animation-delay:{-i * .2:.1f}s}}" for i in range(len(parade)))
-    s += text('♥', W / 2 - text_w('THANKS FOR VIEWING', 6) / 2 - 50, 36, 6, p)
-    s += text('♥', W / 2 + text_w('THANKS FOR VIEWING', 6) / 2 + 20, 36, 6, p)
-    return svg(W, H, s, css, defs, title='Thanks for playing')
+    tw = text_w('THANKS FOR VIEWING', 6)
+    s += text('♥', W / 2 - tw / 2 - 50, 46, 6, p) + text('♥', W / 2 + tw / 2 + 20, 46, 6, p)
+    return svg(W, H, s, css, defs, title='Thanks for viewing')
 
 
 # ═════════════════════════════════════════════════════════════════════════
@@ -633,14 +636,12 @@ def main():
         files[f'btn-demo-{key}.svg'] = demo_button(accents[key])
     files['spacer.svg'] = SPACER
     files['btn-continue.svg'] = continue_button()
-    for th in ('dark', 'light'):
-        files[f'header-projects-{th}.svg'] = section_header('SELECT A PROJECT', th)
-        files[f'header-trophies-{th}.svg'] = section_header('TROPHIES', th)
-        files[f'award-picky-{th}.svg'] = award('2ND', 'HACK WITH CLAUDE', 'UC BERKELEY', 'PICKY', S.SILVER, p, th)
-        files[f'award-claimos-{th}.svg'] = award('4TH', 'YC X NAIVE HACKATHON', '', 'CLAIM OS', S.VIOLET, b, th)
-        files[f'footer-{th}.svg'] = footer(th)
+    files['header-projects.svg'] = section_header('SELECT A PROJECT')
+    files['header-trophies.svg'] = section_header('TROPHIES')
+    files['award-picky.svg'] = award('2ND', 'HACK WITH CLAUDE', 'PICKY', S.SILVER, p)
+    files['award-claimos.svg'] = award('4TH', 'YC X NAIVE HACKATHON', 'CLAIM OS', S.VIOLET, b)
+    files['footer.svg'] = footer()
     for name, data in files.items():
-        # Explicit UTF-8: Windows defaults to cp1252, which mangles the em dashes in titles.
         with open(os.path.join(OUT, name), 'w', encoding='utf-8', newline='\n') as fh:
             fh.write(data)
         print(f'{name:32s} {len(data) / 1024:6.1f} KB')
