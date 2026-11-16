@@ -117,7 +117,7 @@ def hero():
           f'<path fill="url(#tg)" d="{td}"/>'
           f'<g clip-path="url(#tc)"><rect class="shine" x="-200" y="{ty - 20}" width="70" height="200" '
           f'fill="#ffffff" opacity=".55" transform="skewX(-20)"/></g></g>')
-    css += (".tbob{animation:tbob 2.4s steps(1) infinite}"
+    css += (".tbob{animation:tbob 3s ease-in-out infinite}"
             "@keyframes tbob{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}"
             ".shine{animation:shine 4.5s linear infinite}"
             "@keyframes shine{0%{transform:skewX(-20deg) translateX(0)}45%,100%{transform:skewX(-20deg) translateX(2000px)}}")
@@ -140,8 +140,7 @@ def hero():
     # floating power-ups (one per project)
     pups = [(S.DUMPLING, 190, 100, 6), (S.HOUSE, 262, 246, 6), (S.CUBE, 80, 236, 5),
             (S.INTEGRAL, 1330, 96, 6), (S.BUILDING, 1446, 226, 7), (S.THERMO, 1286, 262, 6)]
-    for i, (sp, px_, py_, sc) in enumerate(pups):
-        s += f'<g class="pu pu{i}">{sprite(sp, px_, py_, sc)}</g>'
+    pups = []
     css += (".pu{animation:pu 1.6s steps(1) infinite}"
             "@keyframes pu{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}")
     css += ''.join(f".pu{i}{{animation-delay:{-i * .27:.2f}s}}" for i in range(6))
@@ -166,16 +165,16 @@ def tile(name, hook, accent, scene, scene_css='', defs='', award=None, cta='DEMO
     for i in range(0, TW_, 16):
         s += rect(i, SCENE_H, 8, 4, accent if (i // 16) % 2 == 0 else '#2a2650')
     s += shadow_text(name, 44, 358, 8, CREAM, accent, off=(4, 4))
-    s += text(hook, 44, 440, 4, '#a9a4cc')
-    s += f'<g class="blink">{text("▶ " + cta, TW_ - 44, 446, 3, accent, anchor="end")}</g>'
+    hpx = 5 if text_w(hook, 5) <= TW_ - 88 else 4
+    s += text(hook, 44, 438 if hpx == 5 else 442, hpx, '#b4afd6')
     if award:
         place, pal = award
         msprite = S.medal(place[0])
         label = f'{place} PLACE'
-        pw = 16 + 40 + 16 + text_w(label, 3) + 20
-        s += f'<path fill="{INK}" opacity=".9" d="{panel_path(22, 22, pw, 68, 4)}"/>'
-        s += sprite(msprite, 38, 28, 4, pal)
-        s += text(label, 94, 46, 3, CREAM)
+        pw = 18 + 50 + 18 + text_w(label, 5) + 22
+        s += f'<path fill="{INK}" opacity=".92" d="{panel_path(20, 20, pw, 90, 5)}"/>'
+        s += sprite(msprite, 38, 30, 5, pal)
+        s += text(label, 106, 48, 5, CREAM)
     return frame_panel(TW_, TH_, s, scene_css, defs, f'{name} — {hook.lower()}', border=8)
 
 
@@ -188,11 +187,11 @@ def scene_picky():
     dx, dy = 400 - dw // 2, 176
     s += rect(dx + 20, dy + dh + 2, dw - 40, 8, '#120a18')
     s += f'<g class="dump">{sprite(S.DUMPLING, dx, dy, 10)}</g>'
-    css += (".dump{animation:dump 1s steps(1) infinite}"
-            "@keyframes dump{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}")
+    css += (".dump{transform-box:fill-box;transform-origin:50% 100%;animation:dump 1.1s ease-in-out infinite}"
+            "@keyframes dump{0%,100%{transform:translateY(0) scale(1.07,.93)}15%{transform:translateY(0) scale(1,1)}50%{transform:translateY(-22px) scale(.96,1.05)}85%{transform:translateY(0) scale(1,1)}}")
     # pin pops over the winner
     s += f'<g class="pin">{sprite(S.PIN, 400 - 21, 70, 6)}</g>'
-    css += (".pin{animation:pin 3s steps(1) infinite}"
+    css += (".pin{animation:pin 3s ease-in-out infinite}"
             "@keyframes pin{0%{opacity:0;transform:translateY(-20px)}20%{opacity:1;transform:translateY(0)}"
             "30%{transform:translateY(-8px)}40%,90%{opacity:1;transform:translateY(0)}91%,100%{opacity:0}}")
     # phones voting
@@ -200,9 +199,9 @@ def scene_picky():
     for i, (px_, py_, food) in enumerate(phones):
         s += f'<g class="ph ph{i}">{sprite(S.PHONE, px_, py_, 6)}{sprite(food, px_ + 12, py_ + 30, 6)}</g>'
         s += f'<g class="ht ht{i}">{sprite(S.HEART, px_ + 12, py_ - 30, 6)}</g>'
-    css += (".ph{animation:bob 1.2s steps(1) infinite}"
-            ".ht{opacity:0;animation:ht 3s steps(6) infinite}"
-            "@keyframes ht{0%{opacity:1;transform:translateY(0)}60%{opacity:1;transform:translateY(-48px)}61%,100%{opacity:0}}")
+    css += (".ph{animation:bob 1.4s ease-in-out infinite}"
+            ".ht{opacity:0;animation:ht 3s ease-out infinite}"
+            "@keyframes ht{0%{opacity:0;transform:translateY(0)}10%{opacity:1}55%{opacity:1;transform:translateY(-48px)}70%,100%{opacity:0;transform:translateY(-60px)}}")
     css += ''.join(f".ph{i}{{animation-delay:{-i * .3:.1f}s}}.ht{i}{{animation-delay:{i * .5:.1f}s}}" for i in range(4))
     for i, (sx, sy) in enumerate([(300, 110), (488, 140), (260, 250), (540, 260)]):
         s += f'<g class="tw st{i}">{sprite(S.SPARK, sx, sy, 3)}</g>'
@@ -223,20 +222,20 @@ def scene_claim():
         "kwwwwwwwwwk.", "kwwwwwwwwwk.", "kkkkkkkkkkk."]
     s += sprite(doc, 320, 106, 10)
     s += f'<g class="stamp">{sprite(S.CHECK, 386, 186, 7)}</g>'
-    css += (".stamp{transform-box:fill-box;transform-origin:center;animation:stamp 2.8s steps(1) infinite}"
-            "@keyframes stamp{0%,25%{opacity:0;transform:scale(1.8)}30%{opacity:1;transform:scale(1.25)}"
-            "35%,90%{opacity:1;transform:scale(1)}91%,100%{opacity:0}}")
+    css += (".stamp{transform-box:fill-box;transform-origin:center;animation:stamp 2.8s ease-out infinite}"
+            "@keyframes stamp{0%,25%{opacity:0;transform:scale(2)}32%{opacity:1;transform:scale(.9)}"
+            "38%,88%{opacity:1;transform:scale(1)}95%,100%{opacity:0;transform:scale(1)}}")
     # robot agents
     for i, rx in enumerate([548, 650]):
         s += f'<g class="rb rb{i}">{sprite(S.ROBOT, rx, 194 if i == 0 else 208, 7 if i == 0 else 6)}</g>'
-    css += (".rb{animation:rb .8s steps(1) infinite}"
+    css += (".rb{animation:rb 1s ease-in-out infinite}"
             "@keyframes rb{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}"
-            ".rb1{animation-delay:-.4s}")
+            ".rb1{animation-delay:-.5s}")
     # tax going down
     s += text('$', 660, 70, 8, y)
     s += f'<g class="dn">{sprite(S.ARROW_DOWN, 712, 72, 6)}</g>'
-    css += (".dn{animation:dn 1.2s steps(3) infinite}"
-            "@keyframes dn{0%{transform:translateY(-6px)}100%{transform:translateY(12px)}}")
+    css += (".dn{animation:dn 1.4s ease-in-out infinite}"
+            "@keyframes dn{0%,100%{transform:translateY(-6px)}50%{transform:translateY(12px)}}")
     # dotted path robot -> doc
     for i, dx in enumerate(range(452, 540, 16)):
         s += rect(dx, 236, 8, 8, b, f' class="dot dot{i}"')
@@ -437,7 +436,7 @@ def scene_tempest():
     # data packets flying to the monitor
     for i in range(3):
         s += f'<g class="pk pk{i}">{rect(0, 0, 8, 8, o)}</g>'
-    css += (".pk{animation:pk 1.8s steps(9) infinite}"
+    css += (".pk{animation:pk 1.8s linear infinite}"
             "@keyframes pk{0%{transform:translate(388px,176px)}100%{transform:translate(460px,176px)}}")
     css += ''.join(f".pk{i}{{animation-delay:{-i * .6:.1f}s}}" for i in range(3))
     # monitor with live chart
@@ -471,11 +470,13 @@ def scene_tempest():
     return s, css, defs
 
 
+from scenes2 import scene_rubish, scene_multivis, scene_town  # smooth versions
+
 TILES = [
     # key, name, hook, accent, scene fn, award, cta, link
     ('rubish', 'RUBISH', 'SPELL WORDS ON A CUBE', y, scene_rubish, None, 'REPO'),
     ('town-trial', 'TOWN TRIAL', 'AGENTS TEST TOWN POLICY', PAL['m'], scene_town, None, 'REPO'),
-    ('picky', 'PICKY', 'EVERYONE AGREES ON DINNER', p, scene_picky, ('2ND', S.SILVER), 'REPO'),
+    ('picky', 'PICKY', 'EVERYONE AGREES ON FOOD', p, scene_picky, ('2ND', S.SILVER), 'REPO'),
     ('claimos', 'CLAIM OS', 'AGENTS APPEAL YOUR TAXES', b, scene_claim, ('4TH', S.VIOLET), 'REPO'),
     ('multivis', 'MULTIVIS', 'SEE INTEGRALS IN 3D', v, scene_multivis, None, 'REPO'),
     ('tempest', 'TEMPEST', 'LIVE INDOOR CLIMATE', o, scene_tempest, None, 'REPO'),
@@ -506,9 +507,8 @@ def award(place, line1, line2, project, medal_pal, accent, theme):
     s += f'<path fill="none" stroke="{T["line"]}" stroke-width="4" d="{panel_path(4, 4, W - 8, H - 8, 6)}"/>'
     mw, mh = sprite_size(S.MEDAL, 9)
     s += f'<g class="spin">{sprite(S.medal(place[0]), 66, (H - mh) // 2, 9, medal_pal)}</g>'
-    css += (".spin{transform-box:fill-box;transform-origin:center;animation:spin 2.4s steps(1) infinite}"
-            "@keyframes spin{0%,60%{transform:scaleX(1)}66%{transform:scaleX(.55)}72%{transform:scaleX(.12)}"
-            "78%{transform:scaleX(-.55)}84%{transform:scaleX(-1)}90%{transform:scaleX(-.55)}96%{transform:scaleX(.12)}}")
+    css += (".spin{transform-box:fill-box;transform-origin:center;animation:spin 3s ease-in-out infinite}"
+            "@keyframes spin{0%,55%{transform:scaleX(1)}77%{transform:scaleX(-1)}100%{transform:scaleX(1)}}")
     for i, (sx, sy) in enumerate([(40, 50), (160, 60), (150, 180)]):
         s += f'<g class="tw st{i}">{sprite(S.SPARK, sx, sy, 3, {"w": accent})}</g>'
     css += ''.join(f".st{i}{{animation-delay:{-i * .7:.1f}s}}" for i in range(3))
@@ -539,10 +539,10 @@ def footer(theme):
         g += f'<g class="hop hop{i}">{sprite(sp, x0, 236 - sh, sc)}</g>'
     # two copies for a seamless loop
     s += (f'<g clip-path="url(#fc)"><g class="march">{g}<g transform="translate({total} 0)">{g}</g></g></g>')
-    css += (f".march{{animation:march 18s steps(180) infinite}}"
+    css += (f".march{{animation:march 20s linear infinite}}"
             f"@keyframes march{{0%{{transform:translateX(0)}}100%{{transform:translateX(-{total}px)}}}}"
-            ".hop{animation:hop .6s steps(1) infinite}"
-            "@keyframes hop{50%{transform:translateY(-8px)}}")
+            ".hop{animation:hop .7s ease-in-out infinite}"
+            "@keyframes hop{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}")
     css += ''.join(f".hop{i}{{animation-delay:{-i * .2:.1f}s}}" for i in range(len(parade)))
     s += f'<g class="blink">{text("CONTINUE? ▶", W / 2, 268, 3, T["accent"], anchor="middle")}</g>'
     s += text('♥', W / 2 - text_w('THANKS FOR VIEWING', 6) / 2 - 50, 36, 6, p)
@@ -553,6 +553,7 @@ def footer(theme):
 # ═════════════════════════════════════════════════════════════════════════
 # DEMO BUTTONS (one under each tile that has a live site)
 # ═════════════════════════════════════════════════════════════════════════
+GIF_TILES = {'rubish', 'town-trial', 'multivis'}
 DEMOS = ['rubish', 'town-trial', 'picky', 'multivis']
 
 
@@ -562,7 +563,7 @@ def _mix(hex_, t, to=(255, 255, 255)):
 
 
 def demo_button(accent):
-    W, H, c = 800, 96, 6
+    W, H, c = 800, 112, 6
     s, css = '', BASE_CSS
     s += f'<path fill="{INK}" d="{panel_path(0, 0, W, H, c)}"/>'
     inner = panel_path(6, 6, W - 12, H - 12, c)
@@ -571,19 +572,19 @@ def demo_button(accent):
           f'{rect(0, H - 18, W, 12, _mix(accent, .35, (11, 10, 20)))}'
           f'<rect class="shine" x="-120" y="0" width="60" height="{H}" fill="#ffffff" opacity=".35" transform="skewX(-20)"/></g>')
     label = 'PLAY DEMO'
-    lw = text_w(label, 5)
-    aw = text_w('▶', 5) + 20
+    lw = text_w(label, 7)
+    aw = text_w('▶', 7) + 24
     x0 = (W - lw - aw) / 2
-    s += f'<g class="nudge">{text("▶", x0, 26, 5, INK)}</g>'
-    s += text(label, x0 + aw, 26, 5, INK)
+    s += f'<g class="nudge">{text("▶", x0, 28, 7, INK)}</g>'
+    s += text(label, x0 + aw, 28, 7, INK)
     css += (".shine{animation:shine 3.6s linear infinite}"
             "@keyframes shine{0%{transform:skewX(-20deg) translateX(0)}50%,100%{transform:skewX(-20deg) translateX(1100px)}}"
-            ".nudge{animation:nudge .8s steps(1) infinite}"
-            "@keyframes nudge{50%{transform:translateX(6px)}}")
+            ".nudge{animation:nudge 1s ease-in-out infinite}"
+            "@keyframes nudge{0%,100%{transform:translateX(0)}50%{transform:translateX(8px)}}")
     return svg(W, H, s, css, defs, 'Play demo')
 
 
-SPACER = svg(800, 96, '', title='')
+SPACER = svg(800, 112, '', title='')
 
 
 # ═════════════════════════════════════════════════════════════════════════
@@ -595,6 +596,8 @@ def main():
         res = fn()
         scene, css = res[0], res[1]
         defs = res[2] if len(res) > 2 else ''
+        if key in GIF_TILES:   # rendered in 3D by build_gifs.py
+            continue
         files[f'tile-{key}.svg'] = tile(name, hook, accent, scene, css, defs, aw, cta)
     accents = {t[0]: t[3] for t in TILES}
     for key in DEMOS:
@@ -607,7 +610,8 @@ def main():
         files[f'award-claimos-{th}.svg'] = award('4TH', 'YC X NAIVE HACKATHON', '', 'CLAIM OS', S.VIOLET, b, th)
         files[f'footer-{th}.svg'] = footer(th)
     for name, data in files.items():
-        with open(os.path.join(OUT, name), 'w') as fh:
+        # Explicit UTF-8: Windows defaults to cp1252, which mangles the em dashes in titles.
+        with open(os.path.join(OUT, name), 'w', encoding='utf-8', newline='\n') as fh:
             fh.write(data)
         print(f'{name:32s} {len(data) / 1024:6.1f} KB')
 

@@ -91,6 +91,11 @@ _F = {
     '♥': "..... .#.#. ##### ##### .###. ..#.. .....",
     '_': "..... ..... ..... ..... ..... ..... #####",
     '$': "..#.. .#### #.#.. .###. ..#.# ####. ..#..",
+    '(': ".# #. #. #. #. #. .#",
+    ')': "#. .# .# .# .# .# #.",
+    '=': "..... ..... ##### ..... ##### ..... .....",
+    '^': "..#.. .#.#. #...# ..... ..... ..... .....",
+    '²': "##. ..# .#. ### ... ... ...",
 }
 FONT = {ch: s.split() for ch, s in _F.items()}
 
@@ -218,9 +223,9 @@ def svg(w, h, body, css='', defs='', title=''):
 BASE_CSS = (
     ".blink{animation:blink 1.1s steps(1) infinite}"
     "@keyframes blink{50%{opacity:0}}"
-    ".bob{animation:bob 1.2s steps(1) infinite}"
-    "@keyframes bob{50%{transform:translateY(-6px)}}"
-    ".bob2{animation:bob 1.2s steps(1) infinite;animation-delay:-.6s}"
+    ".bob{animation:bob 1.4s ease-in-out infinite}"
+    "@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}"
+    ".bob2{animation:bob 1.4s ease-in-out infinite;animation-delay:-.7s}"
     ".tw{animation:tw 2.4s steps(1) infinite}"
     "@keyframes tw{0%,100%{opacity:1}40%{opacity:.25}70%{opacity:.7}}"
 )
