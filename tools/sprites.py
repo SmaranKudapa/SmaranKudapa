@@ -196,3 +196,28 @@ def cube_face(colors3x3):
 
 
 CUBE = cube_face(["rwb", "ymo", "brw"])
+
+
+GAMEPAD = [
+    "..kkkkkkkk..",
+    ".kGGGGGGGGk.",
+    "kGGwGGGGrGGk",
+    "kGwwwGGrGrGk",
+    "kGGwGGGGrGGk",
+    "kGGGGkkGGGGk",
+    ".kGGk..kGGk.",
+    "..kk....kk..",
+]
+GAMEPAD_PAL = {'G': '#c4adff', 'r': '#ff4f8b'}
+
+SPARKLE = [
+    "....y....",
+    "....y....",
+    "...yyy...",
+    "..yywyy..",
+    "yyywwwyyy",
+    "..yywyy..",
+    "...yyy...",
+    "....y....",
+    "....y....",
+]

@@ -158,7 +158,20 @@ def hero():
 TW_, TH_, SCENE_H = 800, 500, 330
 
 
-def tile(name, hook, accent, scene, scene_css='', defs='', award=None, cta='DEMO'):
+def badge(label, icon, pal=None, px=5):
+    """Top-left pill on a project tile: icon + label (e.g. 2ND PLACE, GAME)."""
+    iw, ih = sprite_size(icon, px)
+    pw = 18 + iw + 18 + text_w(label, 5) + 22
+    out = f'<path fill="{INK}" opacity=".92" d="{panel_path(20, 20, pw, 90, 5)}"/>'
+    out += sprite(icon, 38, 65 - ih // 2, px, pal)
+    out += text(label, 38 + iw + 18, 48, 5, CREAM)
+    return out
+
+
+TAGS = {'rubish': ('GAME', S.GAMEPAD, S.GAMEPAD_PAL), 'multivis': ('REVAMP', S.SPARKLE, None)}
+
+
+def tile(name, hook, accent, scene, scene_css='', defs='', award=None, cta='DEMO', tag=None):
     s = scene
     # caption area
     s += rect(0, SCENE_H, TW_, TH_ - SCENE_H, '#100e20')
@@ -169,12 +182,9 @@ def tile(name, hook, accent, scene, scene_css='', defs='', award=None, cta='DEMO
     s += text(hook, 44, 438 if hpx == 5 else 442, hpx, '#b4afd6')
     if award:
         place, pal = award
-        msprite = S.medal(place[0])
-        label = f'{place} PLACE'
-        pw = 18 + 50 + 18 + text_w(label, 5) + 22
-        s += f'<path fill="{INK}" opacity=".92" d="{panel_path(20, 20, pw, 90, 5)}"/>'
-        s += sprite(msprite, 38, 30, 5, pal)
-        s += text(label, 106, 48, 5, CREAM)
+        s += badge(f'{place} PLACE', S.medal(place[0]), pal)
+    if tag:
+        s += badge(*tag)
     return frame_panel(TW_, TH_, s, scene_css, defs, f'{name} — {hook.lower()}', border=8)
 
 
@@ -557,7 +567,7 @@ def footer():
 # DEMO BUTTONS (one under each tile that has a live site)
 # ═════════════════════════════════════════════════════════════════════════
 GIF_TILES = {'rubish', 'town-trial', 'multivis'}
-DEMOS = ['rubish', 'town-trial', 'picky', 'multivis']
+DEMOS = ['rubish', 'town-trial', 'picky', 'claimos', 'multivis']
 
 
 def _mix(hex_, t, to=(255, 255, 255)):
@@ -565,26 +575,33 @@ def _mix(hex_, t, to=(255, 255, 255)):
     return '#' + ''.join(f'{round(a + (b_ - a) * t):02x}' for a, b_ in zip(c, to))
 
 
-def demo_button(accent):
-    W, H, c = 800, 112, 6
+VIDEOS = {  # projects with a video on youtube.com/@smarankudapa591
+    'town-trial': 'https://www.youtube.com/watch?v=ZaJVsbZ8RjM',
+    'picky': 'https://www.youtube.com/shorts/55nvBi-CMXI',
+    'claimos': 'https://www.youtube.com/watch?v=f6ASmuaO4IY',
+}
+
+
+def demo_button(accent, label='DEMO', W=800, dark=False):
+    """Pixel button with a blinking ▶. W=392 makes the half used beside a VIDEO button."""
+    H, c = 112, 6
     s, css = '', BASE_CSS
+    fill = _mix(accent, .55, (11, 10, 20)) if dark else accent
+    ink = CREAM if dark else INK
     s += f'<path fill="{INK}" d="{panel_path(0, 0, W, H, c)}"/>'
     inner = panel_path(6, 6, W - 12, H - 12, c)
     defs = f'<clipPath id="bc"><path d="{inner}"/></clipPath>'
-    s += (f'<g clip-path="url(#bc)">{rect(0, 0, W, H, accent)}{rect(0, 6, W, 8, _mix(accent, .45))}'
-          f'{rect(0, H - 18, W, 12, _mix(accent, .35, (11, 10, 20)))}'
-          f'<rect class="shine" x="-120" y="0" width="60" height="{H}" fill="#ffffff" opacity=".35" transform="skewX(-20)"/></g>')
-    label = 'PLAY DEMO'
+    s += (f'<g clip-path="url(#bc)">{rect(0, 0, W, H, fill)}{rect(0, 6, W, 8, _mix(fill, .4))}'
+          f'{rect(0, H - 18, W, 12, _mix(fill, .35, (11, 10, 20)))}'
+          f'<rect class="shine" x="-120" y="0" width="60" height="{H}" fill="#ffffff" opacity=".3" transform="skewX(-20)"/></g>')
     lw = text_w(label, 7)
     aw = text_w('▶', 7) + 24
     x0 = (W - lw - aw) / 2
-    s += f'<g class="nudge">{text("▶", x0, 28, 7, INK)}</g>'
-    s += text(label, x0 + aw, 28, 7, INK)
-    css += (".shine{animation:shine 3.6s linear infinite}"
-            "@keyframes shine{0%{transform:skewX(-20deg) translateX(0)}50%,100%{transform:skewX(-20deg) translateX(1100px)}}"
-            ".nudge{animation:nudge 1s ease-in-out infinite}"
-            "@keyframes nudge{0%,100%{transform:translateX(0)}50%{transform:translateX(8px)}}")
-    return svg(W, H, s, css, defs, 'Play demo')
+    s += f'<g class="blink">{text("▶", x0, 28, 7, ink)}</g>'
+    s += text(label, x0 + aw, 28, 7, ink)
+    css += (f".shine{{animation:shine 3.6s linear infinite}}"
+            f"@keyframes shine{{0%{{transform:skewX(-20deg) translateX(0)}}50%,100%{{transform:skewX(-20deg) translateX({W + 300}px)}}}}")
+    return svg(W, H, s, css, defs, label.title())
 
 
 SPACER = svg(800, 112, '', title='')
@@ -627,10 +644,14 @@ def main():
         defs = res[2] if len(res) > 2 else ''
         if key in GIF_TILES:   # rendered in 3D by build_gifs.py
             continue
-        files[f'tile-{key}.svg'] = tile(name, hook, accent, scene, css, defs, aw, cta)
+        files[f'tile-{key}.svg'] = tile(name, hook, accent, scene, css, defs, aw, cta, TAGS.get(key))
     accents = {t[0]: t[3] for t in TILES}
     for key in DEMOS:
-        files[f'btn-demo-{key}.svg'] = demo_button(accents[key])
+        if key in VIDEOS:   # split: DEMO half + VIDEO half
+            files[f'btn-demo-{key}.svg'] = demo_button(accents[key], 'DEMO', 392)
+            files[f'btn-video-{key}.svg'] = demo_button(accents[key], 'VIDEO', 392, dark=True)
+        else:
+            files[f'btn-demo-{key}.svg'] = demo_button(accents[key])
     files['spacer.svg'] = SPACER
     files['btn-continue.svg'] = continue_button()
     files['award-picky.svg'] = award('2ND', 'HACK WITH CLAUDE', 'PICKY', S.SILVER, p)

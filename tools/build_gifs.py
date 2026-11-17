@@ -38,7 +38,8 @@ def chrome_pngs(key):
     W, H, b = 800, 500, 8
     over = svg(W, H,
                f'<path fill="{INK}" fill-rule="evenodd" d="{panel_path(0, 0, W, H, b)}{panel_path(b, b, W - 2 * b, H - 2 * b, b)}"/>'
-               f'<path fill="none" stroke="#3a3366" stroke-width="4" d="{panel_path(b + 2, b + 2, W - 2 * b - 4, H - 2 * b - 4, b)}"/>')
+               f'<path fill="none" stroke="#3a3366" stroke-width="4" d="{panel_path(b + 2, b + 2, W - 2 * b - 4, H - 2 * b - 4, b)}"/>'
+               + (BA.badge(*BA.TAGS[key]) if key in BA.TAGS else ''))   # badge sits above the moving scene
     paths = {}
     for nm, data in (('base', base), ('over', over)):
         p = f'{TMP}/{key}-{nm}.svg'
@@ -271,13 +272,13 @@ def multivis_scenes(T=12.0):
                     pa, pb = cam.proj(a), cam.proj(b_)
                     dr.line([pa[:2], pb[:2]], fill=rgb('#2c3c80'), width=1)
             # labels
-            psprite(dr, S.INTEGRAL, 14, 30, 3, {'b': rgb('#4fb3ff')})
-            psprite(dr, S.INTEGRAL, 36, 30, 3, {'b': rgb('#4fb3ff')})
-            ptext(dr, 'SIN(X)COS(Y)', 14, 84, 2, rgb('#9fd8ff'))
-            ptext(dr, '+ E^-R²', 14, 102, 2, rgb('#9fd8ff'))
+            psprite(dr, S.INTEGRAL, 14, 60, 3, {'b': rgb('#4fb3ff')})
+            psprite(dr, S.INTEGRAL, 36, 60, 3, {'b': rgb('#4fb3ff')})
+            ptext(dr, 'SIN(X)COS(Y)', 14, 108, 2, rgb('#9fd8ff'))
+            ptext(dr, '+ E^-R²', 14, 124, 2, rgb('#9fd8ff'))
 
         def post(img, dr, cam, vol=vol):
-            ptext(dr, f'= {vol:+.2f}', 14, 124, 2, rgb(PAL['y']))
+            ptext(dr, f'= {vol:+.2f}', 14, 142, 2, rgb(PAL['y']))
         scenes.append(render(objs, cam, (SW, SH), pre=pre, post=post))
     return scenes
 

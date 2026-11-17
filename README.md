@@ -14,9 +14,9 @@
   <a href="https://github.com/SmaranKudapa/town-trial"><img src="assets/tile-town-trial.gif" width="32%" alt="Town Trial: research agents test local policy in a simulated town. (repo)"></a>
   <a href="https://github.com/SmaranKudapa/picky"><img src="assets/tile-picky.svg" width="32%" alt="picky: everyone agrees on food. 2nd place, Hack With Claude. (repo)"></a>
   <br>
-  <a href="https://rubish-delta.vercel.app"><img src="assets/btn-demo-rubish.svg" width="32%" alt="Play the rubish demo"></a>
-  <a href="https://town-trial.vercel.app"><img src="assets/btn-demo-town-trial.svg" width="32%" alt="Play the Town Trial demo"></a>
-  <a href="https://picky-ten-flax.vercel.app"><img src="assets/btn-demo-picky.svg" width="32%" alt="Play the picky demo"></a>
+  <a href="https://rubish-delta.vercel.app"><img src="assets/btn-demo-rubish.svg" width="32%" alt="rubish demo"></a>
+  <a href="https://town-trial.vercel.app"><img src="assets/btn-demo-town-trial.svg" width="15.5%" alt="Town Trial demo"></a><a href="https://www.youtube.com/watch?v=ZaJVsbZ8RjM"><img src="assets/btn-video-town-trial.svg" width="15.5%" alt="Town Trial video"></a>
+  <a href="https://picky-ten-flax.vercel.app"><img src="assets/btn-demo-picky.svg" width="15.5%" alt="picky demo"></a><a href="https://www.youtube.com/shorts/55nvBi-CMXI"><img src="assets/btn-video-picky.svg" width="15.5%" alt="picky video"></a>
 </p>
 
 <p align="center">
@@ -24,8 +24,8 @@
   <a href="https://github.com/SmaranKudapa/multivis"><img src="assets/tile-multivis.gif" width="32%" alt="Multivis: see double and triple integrals in 3D. (repo)"></a>
   <a href="https://github.com/SmaranKudapa/tempest"><img src="assets/tile-tempest.svg" width="32%" alt="Tempest: live indoor climate from an Arduino sensor. (repo)"></a>
   <br>
-  <img src="assets/spacer.svg" width="32%" alt="">
-  <a href="https://smarankudapa.github.io/multivis/"><img src="assets/btn-demo-multivis.svg" width="32%" alt="Play the Multivis demo"></a>
+  <a href="https://claimos-site-mds8vwd4myby.vercel.app/"><img src="assets/btn-demo-claimos.svg" width="15.5%" alt="Claim OS demo"></a><a href="https://www.youtube.com/watch?v=f6ASmuaO4IY"><img src="assets/btn-video-claimos.svg" width="15.5%" alt="Claim OS video"></a>
+  <a href="https://smarankudapa.github.io/multivis/"><img src="assets/btn-demo-multivis.svg" width="32%" alt="Multivis demo"></a>
   <img src="assets/spacer.svg" width="32%" alt="">
 </p>
 
