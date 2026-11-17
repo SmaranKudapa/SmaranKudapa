@@ -582,9 +582,23 @@ VIDEOS = {  # projects with a video on youtube.com/@smarankudapa591
 }
 
 
-def demo_button(accent, label='DEMO', W=800, dark=False):
-    """Pixel button with a blinking ▶. W=392 makes the half used beside a VIDEO button."""
+HALF_GAP = 16  # space between a DEMO half and its VIDEO half, in tile pixels
+
+
+def demo_button(accent, label='DEMO', dark=False, side=None):
+    """Pixel button with a blinking ▶.
+
+    side=None is a full 800-wide button (same width as a tile). side='left' or 'right'
+    is a half: drawn on a 400-wide transparent canvas, with HALF_GAP/2 of empty space on
+    the inner edge. Two halves placed at width="16%" with no whitespace between them
+    fill exactly the 32% a tile does, so their outer edges line up with the tile's.
+    """
     H, c = 112, 6
+    if side:
+        canvas, W = 400, 400 - HALF_GAP // 2
+        ox = 0 if side == 'left' else HALF_GAP // 2
+    else:
+        canvas, W, ox = 800, 800, 0
     s, css = '', BASE_CSS
     fill = _mix(accent, .55, (11, 10, 20)) if dark else accent
     ink = CREAM if dark else INK
@@ -601,7 +615,9 @@ def demo_button(accent, label='DEMO', W=800, dark=False):
     s += text(label, x0 + aw, 28, 7, ink)
     css += (f".shine{{animation:shine 3.6s linear infinite}}"
             f"@keyframes shine{{0%{{transform:skewX(-20deg) translateX(0)}}50%,100%{{transform:skewX(-20deg) translateX({W + 300}px)}}}}")
-    return svg(W, H, s, css, defs, label.title())
+    if ox:
+        s = f'<g transform="translate({ox} 0)">{s}</g>'
+    return svg(canvas, H, s, css, defs, label.title())
 
 
 SPACER = svg(800, 112, '', title='')
@@ -648,8 +664,8 @@ def main():
     accents = {t[0]: t[3] for t in TILES}
     for key in DEMOS:
         if key in VIDEOS:   # split: DEMO half + VIDEO half
-            files[f'btn-demo-{key}.svg'] = demo_button(accents[key], 'DEMO', 392)
-            files[f'btn-video-{key}.svg'] = demo_button(accents[key], 'VIDEO', 392, dark=True)
+            files[f'btn-demo-{key}.svg'] = demo_button(accents[key], 'DEMO', side='left')
+            files[f'btn-video-{key}.svg'] = demo_button(accents[key], 'VIDEO', dark=True, side='right')
         else:
             files[f'btn-demo-{key}.svg'] = demo_button(accents[key])
     files['spacer.svg'] = SPACER
