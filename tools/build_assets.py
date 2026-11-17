@@ -635,7 +635,6 @@ def main():
     files['btn-continue.svg'] = continue_button()
     files['award-picky.svg'] = award('2ND', 'HACK WITH CLAUDE', 'PICKY', S.SILVER, p)
     files['award-claimos.svg'] = award('4TH', 'YC X NAIVE HACKATHON', 'CLAIM OS', S.VIOLET, b)
-    files['footer.svg'] = footer()
     for name, data in files.items():
         with open(os.path.join(OUT, name), 'w', encoding='utf-8', newline='\n') as fh:
             fh.write(data)

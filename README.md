@@ -1,6 +1,6 @@
 <!--
   Images in assets/ are generated, not hand-made:
-  - SVGs (hero, tiles, buttons, headers, trophies, footer): python3 tools/build_assets.py
+  - SVGs (hero, tiles, buttons, trophies): python3 tools/build_assets.py
   - 3D GIF tiles (rubish, Town Trial, Multivis):            python3 tools/build_gifs.py
   Edit the scripts, re-run them, and commit the new files in assets/.
 -->
@@ -32,10 +32,6 @@
 <p align="center">
   <a href="https://github.com/SmaranKudapa/picky"><img src="assets/award-picky.svg" width="49%" alt="2nd place, Hack With Claude at UC Berkeley, for picky"></a>
   <a href="https://github.com/SmaranKudapa/claimos"><img src="assets/award-claimos.svg" width="49%" alt="4th place at the YC x Naive Hackathon, for Claim OS"></a>
-</p>
-
-<p align="center">
-  <img src="assets/footer.svg" width="830" alt="Project mascots marching by">
 </p>
 
 <p align="center">
