@@ -25,7 +25,7 @@
   <a href="https://github.com/SmaranKudapa/tempest"><img src="assets/tile-tempest.svg" width="32%" alt="Tempest: live indoor climate from an Arduino sensor. (repo)"></a>
   <br>
   <a href="https://claimos-site-mds8vwd4myby.vercel.app/"><img src="assets/btn-demo-claimos.svg" width="16%" alt="Claim OS demo"></a><a href="https://www.youtube.com/watch?v=f6ASmuaO4IY"><img src="assets/btn-video-claimos.svg" width="16%" alt="Claim OS video"></a>
-  <a href="https://smarankudapa.github.io/multivis/"><img src="assets/btn-demo-multivis.svg" width="32%" alt="Multivis demo"></a>
+  <a href="https://multivis.vercel.app"><img src="assets/btn-demo-multivis.svg" width="32%" alt="Multivis demo"></a>
   <img src="assets/spacer.svg" width="32%" alt="">
 </p>
 
