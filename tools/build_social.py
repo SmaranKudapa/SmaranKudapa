@@ -13,7 +13,7 @@ from trial_assets import social_button, FRAME_ACCENT, SOCIAL
 HERE = os.path.dirname(os.path.abspath(__file__))
 OUT = os.path.normpath(os.path.join(HERE, '..', 'assets'))
 TMP = '/tmp/social_build'
-SIZE, GAP = 512, 30                          # 2x of the 256px design; GAP split above/below = gap between stacked buttons
+SIZE, GAP = 512, 12                          # 2x of the 256px design; GAP split above/below (GitHub adds ~5px line spacing too)
 LOGO_W = {'linkedin': .56, 'youtube': .64, 'x': .54}
 
 

@@ -9,7 +9,7 @@
     gaps are transparent spacer images (1.99%), Demo/Video halves are 15.5% + 0.99% + 15.5%.
   - Top row: GitHub pads align=left images by 20px on the inner side, so only the banner
     floats; the three social buttons sit in the line beside it and stack on their own.
-    86.4% banner / 10.05% buttons keeps both the same height, edge-aligned, down to ~640px.
+    86.4% banner / 10.05% buttons keeps both the same height (measured live at 846px), edge-aligned, down to ~640px.
     No whitespace between the banner tag and the first button.
   Edit the scripts, re-run them, and commit the new files in assets/.
 -->
