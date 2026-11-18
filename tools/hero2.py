@@ -8,6 +8,7 @@ from pixel import PAL, INK, BASE_CSS, text, text_w, text_d, shadow_text, sprite,
 import sprites as S
 
 W, H, HOR = 1600, 520, 420
+LBL = 7  # px size of the CS + MATH / UC BERKELEY labels
 k, w, y, o, p, m, b = (PAL[c] for c in 'kwyopmb')
 
 
@@ -51,7 +52,7 @@ def hero():
                 f"96%{{opacity:1;transform:translate(260px,130px)}}97%,100%{{opacity:0;transform:translate(260px,130px)}}}}")
 
     # sun: glow + striped disc, slowly rising and sinking behind the city
-    cx, R, px = 800, 140, 10
+    cx, R, px = W // 2, 140, 10
     glow = ''
     for i, (rr, op) in enumerate([(230, .10), (196, .14), (168, .2)]):
         for yy in range(HOR - rr, HOR, px):
@@ -127,8 +128,8 @@ def hero():
     css += ''.join(f".lt{i}{{animation-delay:{-i * .16:.2f}s}}" for i in range(len(title)))
 
     # HUD corners
-    s += shadow_text('CS + MATH', cx - 300, 282, 7, y, INK, off=(0, 7), anchor='end')
-    s += shadow_text('UC BERKELEY', cx + 250, 282, 7, y, INK, off=(0, 7))
+    s += shadow_text('CS + MATH', cx - 300, 282, LBL, y, INK, off=(0, LBL), anchor='end')
+    s += shadow_text('UC BERKELEY', cx + 250, 282, LBL, y, INK, off=(0, LBL))
 
     clip = panel_path(8, 8, W - 16, H - 16, 8)
     defs = f'<clipPath id="c"><path d="{clip}"/></clipPath>' + defs
@@ -136,3 +137,14 @@ def hero():
             f'<g clip-path="url(#c)">{s}</g>'
             f'<path fill="none" stroke="#3a3366" stroke-width="4" d="{panel_path(10, 10, W - 20, H - 20, 8)}"/>')
     return svg(W, H, body, css, defs, 'Smaran')
+
+
+def hero_narrow(width=1400):
+    """Same banner, narrower, for the layout with a social-button rail beside it."""
+    global W, LBL
+    old = (W, LBL)
+    W, LBL = width, 6
+    try:
+        return hero()
+    finally:
+        W, LBL = old
