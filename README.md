@@ -9,15 +9,16 @@
     gaps are transparent spacer images (1.99%), Demo/Video halves are 15.5% + 0.99% + 15.5%.
   - Top row: GitHub pads align=left images by 20px on the inner side, so only the banner
     floats; the three social buttons sit in the line beside it and stack on their own.
-    86.4% banner / 10.05% buttons keeps both the same height (measured live at 846px), edge-aligned, down to ~640px.
+    87.03% banner / 10.14% buttons: same height, ~24px gap (GitHub forces 20px), edge-aligned;
+    measured live, the buttons stay beside the banner for READMEs >= ~750px wide (windows >= ~1200px).
     No whitespace between the banner tag and the first button.
   Edit the scripts, re-run them, and commit the new files in assets/.
 -->
 
 <p align="right">
-  <img src="assets/hero-narrow.svg" width="86.4%" align="left" alt="SMARAN. CS + Math at UC Berkeley."><a href="https://www.linkedin.com/in/smaran-kudapa/"><img src="assets/btn-social-linkedin.png" width="10.05%" alt="LinkedIn"></a>
-  <a href="https://www.youtube.com/@smarankudapa591"><img src="assets/btn-social-youtube.png" width="10.05%" alt="YouTube"></a>
-  <a href="https://x.com/KudapaSmaran"><img src="assets/btn-social-x.png" width="10.05%" alt="X"></a>
+  <img src="assets/hero-narrow.svg" width="87.03%" align="left" alt="SMARAN. CS + Math at UC Berkeley."><a href="https://www.linkedin.com/in/smaran-kudapa/"><img src="assets/btn-social-linkedin.png" width="10.14%" alt="LinkedIn"></a>
+  <a href="https://www.youtube.com/@smarankudapa591"><img src="assets/btn-social-youtube.png" width="10.14%" alt="YouTube"></a>
+  <a href="https://x.com/KudapaSmaran"><img src="assets/btn-social-x.png" width="10.14%" alt="X"></a>
   <br clear="left">
 </p>
 
