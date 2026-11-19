@@ -272,13 +272,13 @@ def multivis_scenes(T=12.0):
                     pa, pb = cam.proj(a), cam.proj(b_)
                     dr.line([pa[:2], pb[:2]], fill=rgb('#2c3c80'), width=1)
             # labels
-            psprite(dr, S.INTEGRAL, 14, 60, 3, {'b': rgb('#4fb3ff')})
-            psprite(dr, S.INTEGRAL, 36, 60, 3, {'b': rgb('#4fb3ff')})
-            ptext(dr, 'SIN(X)COS(Y)', 14, 108, 2, rgb('#9fd8ff'))
-            ptext(dr, '+ E^-R²', 14, 124, 2, rgb('#9fd8ff'))
+            psprite(dr, S.INTEGRAL, 14, 30, 3, {'b': rgb('#4fb3ff')})
+            psprite(dr, S.INTEGRAL, 36, 30, 3, {'b': rgb('#4fb3ff')})
+            ptext(dr, 'SIN(X)COS(Y)', 14, 84, 2, rgb('#9fd8ff'))
+            ptext(dr, '+ E^-R²', 14, 102, 2, rgb('#9fd8ff'))
 
         def post(img, dr, cam, vol=vol):
-            ptext(dr, f'= {vol:+.2f}', 14, 142, 2, rgb(PAL['y']))
+            ptext(dr, f'= {vol:+.2f}', 14, 124, 2, rgb(PAL['y']))
         scenes.append(render(objs, cam, (SW, SH), pre=pre, post=post))
     return scenes
 

@@ -2,11 +2,15 @@
   Images in assets/ are generated, not hand-made:
   - SVGs (hero, tiles, buttons, trophies): python3 tools/build_assets.py
   - 3D GIF tiles (rubish, Town Trial, Multivis):            python3 tools/build_gifs.py
-  - narrow banner + social buttons (logos in tools/logos/): python3 tools/trial_assets.py && python3 tools/build_social.py
+  - narrow banner:                                          python3 tools/trial_assets.py
+  - social buttons (logos in tools/logos/, animated SVG):   python3 tools/build_social.py
+  - DEMO / VIDEO / BLOG split buttons:                      python3 tools/links_assets.py
+    (writes assets/iter/seg-<kind>-<project>.svg; copy to assets/btn-<kind>-<project>.svg, article -> blog)
 
   Layout rules (keep them or edges stop lining up):
   - Each grid row spans 0-100%: images sit on one line with NO whitespace between them;
-    gaps are transparent spacer images (1.99%), Demo/Video halves are 15.5% + 0.99% + 15.5%.
+    gaps are transparent spacer images (1.99%). A tile's link bar splits by link count:
+    1 link = 32%, 2 = 15.5% + 0.99% + 15.5%, 3 = 10% + 0.99% + 10% + 0.99% + 10%.
   - Top row: GitHub pads align=left images by 20px on the inner side, so only the banner
     floats; the three social buttons sit in the line beside it and stack on their own.
     87.03% banner / 10.14% buttons: same height, ~24px gap (GitHub forces 20px), edge-aligned;
@@ -16,16 +20,16 @@
 -->
 
 <p align="right">
-  <img src="assets/hero-narrow.svg" width="87.03%" align="left" alt="SMARAN. CS + Math at UC Berkeley."><a href="https://www.linkedin.com/in/smaran-kudapa/"><img src="assets/btn-social-linkedin.png" width="10.14%" alt="LinkedIn"></a>
-  <a href="https://www.youtube.com/@smarankudapa591"><img src="assets/btn-social-youtube.png" width="10.14%" alt="YouTube"></a>
-  <a href="https://x.com/KudapaSmaran"><img src="assets/btn-social-x.png" width="10.14%" alt="X"></a>
+  <img src="assets/hero-narrow.svg" width="87.03%" align="left" alt="SMARAN. CS + Math at UC Berkeley."><a href="https://www.linkedin.com/in/smaran-kudapa/"><img src="assets/btn-social-linkedin.svg" width="10.14%" alt="LinkedIn"></a>
+  <a href="https://www.youtube.com/@smarankudapa591"><img src="assets/btn-social-youtube.svg" width="10.14%" alt="YouTube"></a>
+  <a href="https://x.com/KudapaSmaran"><img src="assets/btn-social-x.svg" width="10.14%" alt="X"></a>
   <br clear="left">
 </p>
 
 <p align="center">
-  <a href="https://github.com/SmaranKudapa/rubish"><img src="assets/tile-rubish.gif" width="32%" alt="rubish: turn a word into Rubik's cube moves that spell it. (repo)"></a><img src="assets/spacer.svg" width="1.99%" alt=""><a href="https://github.com/SmaranKudapa/town-trial"><img src="assets/tile-town-trial.gif" width="32%" alt="Town Trial: research agents test local policy in a simulated town. (repo)"></a><img src="assets/spacer.svg" width="1.99%" alt=""><a href="https://github.com/SmaranKudapa/picky"><img src="assets/tile-picky.svg" width="32%" alt="picky: everyone agrees on food. 2nd place, Hack With Claude. (repo)"></a>
+  <a href="https://github.com/SmaranKudapa/rubish"><img src="assets/tile-rubish.gif" width="32%" alt="rubish: turn a word into Rubik's cube moves that spell it. (repo)"></a><img src="assets/spacer.svg" width="1.99%" alt=""><a href="https://github.com/SmaranKudapa/town-trial"><img src="assets/tile-town-trial.gif" width="32%" alt="Town Trial: research agents test local policy in a simulated town. Featured on the past.dev blog. (repo)"></a><img src="assets/spacer.svg" width="1.99%" alt=""><a href="https://github.com/SmaranKudapa/picky"><img src="assets/tile-picky.svg" width="32%" alt="picky: everyone agrees on food. 2nd place, Hack With Claude. (repo)"></a>
   <br>
-  <a href="https://rubish-delta.vercel.app"><img src="assets/btn-demo-rubish.svg" width="32%" alt="rubish demo"></a><img src="assets/spacer.svg" width="1.99%" alt=""><a href="https://town-trial.vercel.app"><img src="assets/btn-demo-town-trial.svg" width="15.5%" alt="Town Trial demo"></a><img src="assets/spacer.svg" width="0.99%" alt=""><a href="https://www.youtube.com/watch?v=ZaJVsbZ8RjM"><img src="assets/btn-video-town-trial.svg" width="15.5%" alt="Town Trial video"></a><img src="assets/spacer.svg" width="1.99%" alt=""><a href="https://picky-ten-flax.vercel.app"><img src="assets/btn-demo-picky.svg" width="15.5%" alt="picky demo"></a><img src="assets/spacer.svg" width="0.99%" alt=""><a href="https://www.youtube.com/shorts/55nvBi-CMXI"><img src="assets/btn-video-picky.svg" width="15.5%" alt="picky video"></a>
+  <a href="https://rubish-delta.vercel.app"><img src="assets/btn-demo-rubish.svg" width="32%" alt="rubish demo"></a><img src="assets/spacer.svg" width="1.99%" alt=""><a href="https://town-trial.vercel.app"><img src="assets/btn-demo-town-trial.svg" width="10%" alt="Town Trial demo"></a><img src="assets/spacer.svg" width="0.99%" alt=""><a href="https://www.youtube.com/watch?v=ZaJVsbZ8RjM"><img src="assets/btn-video-town-trial.svg" width="10%" alt="Town Trial video"></a><img src="assets/spacer.svg" width="0.99%" alt=""><a href="https://past.dev/blog/projects/town-trial"><img src="assets/btn-blog-town-trial.svg" width="10%" alt="Town Trial blog"></a><img src="assets/spacer.svg" width="1.99%" alt=""><a href="https://picky-ten-flax.vercel.app"><img src="assets/btn-demo-picky.svg" width="15.5%" alt="picky demo"></a><img src="assets/spacer.svg" width="0.99%" alt=""><a href="https://www.youtube.com/shorts/55nvBi-CMXI"><img src="assets/btn-video-picky.svg" width="15.5%" alt="picky video"></a>
 </p>
 
 <p align="center">

@@ -221,3 +221,40 @@ SPARKLE = [
     "....y....",
     "....y....",
 ]
+
+STAR = [
+    "....y....",
+    "...yyy...",
+    "yyyyyyyyy",
+    ".yyyyyyy.",
+    "..yyyyy..",
+    ".yyy.yyy.",
+    "yy.....yy",
+]
+
+NEWSPAPER = [
+    ".kkkkkkkkkkk",
+    ".kwwwwwwwwwk",
+    ".kwkkkkkkkwk",
+    ".kwwwwwwwwwk",
+    "kkwbbbwkkkwk",
+    "kwwbbbwwwwwk",
+    "kwwbbbwkkkwk",
+    "kwwwwwwwwwwk",
+    "kwkkkkkkkkwk",
+    "kkkkkkkkkkkk",
+]
+
+NEWSPAPER2 = [  # folded newspaper: rolled section on the left, headline, photo, text columns
+    "..kkkkkkkkkkkk",
+    "..kwwwwwwwwwwk",
+    "..kwkkkkkkkkwk",
+    "..kwwwwwwwwwwk",
+    "kkkwbbbwkkkkwk",
+    "kwkwbbbwwwwwwk",
+    "kwkwbbbwkkkkwk",
+    "kwkwwwwwwwwwwk",
+    "kwkwkkkkkkkkwk",
+    "kwkwwwwwwwwwwk",
+    ".kkkkkkkkkkkkk",
+]
